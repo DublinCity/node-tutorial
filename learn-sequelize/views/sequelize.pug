@@ -1,0 +1,60 @@
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    meta(http-equiv="X-UA-Compatible", content="ie=edge")
+    
+    title sequalize server
+    style.
+      table {
+        
+      }    
+  body
+    div
+      form#user-form
+        fieldset
+          legend 사용자등록
+          div
+            input#username(type="text" placeholder="name")
+          div
+            input#age(type="text" placeholder="age")
+          div
+            input#married(type="checkbox")
+            label(for="married") marrid? 
+          button register
+    br
+    table#user-list
+      thead
+        tr
+          th id
+          th name
+          th age
+          th married
+      tbody
+        for user in users
+          tr
+            td= user.id
+            td= user.name
+            td= user.age
+            td= user.married ? 'married': 'not married'
+    br
+    div
+      form#comment-form
+        fieldset
+          legend comment
+          div
+            input#userid(type="text" placeholder="userID")
+          div
+            input#comment(type="text" placeholder="comment")
+          button submit
+    br
+    table#comment-list
+      thead
+        tr
+          th ID
+          th Writer
+          th comment
+          th editor
+          th delete
+      tbody
+    script(src="/javascripts/sequelize.js")
