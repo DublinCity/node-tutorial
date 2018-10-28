@@ -14,3 +14,5 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: false
   })
 }
+
+// github history commit test
