@@ -4,31 +4,31 @@ var User = require('../models').User
 var router = express.Router();
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
-  User.findAll()
-    .then(users => {
-      res.json(users)
-    })
-    .catch(err => {
+router.get('/', async(req, res, next) => {
+  try {
+    const users = await User.findAll()
+    res.json(users)
+  }
+    catch(err) {
       console.error(err)
       next(err)
-    })
+    }
 });
 
-router.post('/', function(req, res, next) {
-  User.create({
-    name: req.body.name,
-    age: req.body.age,
-    married: req.body.married
-  })
-    .then(result => {
-      console.log(result)
-      res.status(201).json(result)
+router.post('/', async(req, res, next) => {
+  try {
+    const result = await User.create({
+      name: req.body.name,
+      age: req.body.age,
+      married: req.body.married
     })
-    .catch(err => {
+  
+    res.status(201).json(result)
+  }
+    catch(err){
       console.error(err)
       next(err)
-    })
+    }
 })
 
 module.exports = router;
