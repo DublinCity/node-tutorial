@@ -1,0 +1,40 @@
+doctype
+html
+  head
+    meta(charset='uft-8')
+    title= title
+    meta(name='viewport' content='width=device-width, user-scalable=no')
+    meta(http-equiv='X-UA-Compatible' content='IE=edge')
+    //- link(rel="stylesheet", href="/main.css")
+  body
+    .container
+      .profile-wrap
+        .profile
+          if user && user.id
+            .half
+              div Following
+                .count.following-count= user.Followings && user.Followings.length || 0
+            .half
+              div Follower
+                .count.follower-count= user.Followers && user.Followers.length || 0
+            input#my-id(type="hidden" value=user.id)
+            a#my-profile.btn(href="/profile") my profile
+            a#logout.btn(href="/auth/logout") logout
+          else
+            form#login-form(action="/auth/login" method="post")
+              .input-group
+                label(for="email") email
+                input#email(type="email" name="email" required autofocus)
+              .input-group
+                label(for="password") password
+                input#password(type="password" name="password" required)
+              if loginError
+                .error-message= loginError
+              a#join.btn(href="/join") sign up
+              button#login.btn(type="submit") login
+              a#kakao.btn(href="/auth/kakao") kakaoTalk
+      footer 
+        |Made by &nbsp;
+        a(href="http://naver.com") naver
+    block content
+
