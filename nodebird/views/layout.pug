@@ -5,7 +5,7 @@ html
     title= title
     meta(name='viewport' content='width=device-width, user-scalable=no')
     meta(http-equiv='X-UA-Compatible' content='IE=edge')
-    //- link(rel="stylesheet", href="/main.css")
+    link(rel="stylesheet", href="/main.css")
   body
     .container
       .profile-wrap
@@ -28,6 +28,7 @@ html
               .input-group
                 label(for="password") password
                 input#password(type="password" name="password" required)
+              | MMM
               if loginError
                 .error-message= loginError
               a#join.btn(href="/join") sign up
