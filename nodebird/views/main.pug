@@ -14,22 +14,22 @@ block content
             label#img-label(for="img") img Upload
             input#img(type="file" accept="image/*")
             button#twit-btn.btn(type="submit") TWIT!
-      .twits 
-        form#hashtag-form(action="/post/hashtag")
-          input(type="text" name="hashtag" placeholder="search tag")
-          button.btn SEARCH
-        for twit in twits
-          .twit
-            input.twit-user-id(type="hidden" value=twit.user.id)
-            input.twit-id(type="hidden" value=twit.id)
-            .twit-author= twit.user.nick
-            -const follow = user && user.Followings.map(f => f.id).includes(twit.user.id)
-            if user && user.id !== twit.user.id && !follow
-              button.twit-follow to Follow
-            .twit-content= twit.content
-            if twit.img
-              .twit-img
-                img(src=twit.img, alt="thumbnail")
+    .twits 
+      form#hashtag-form(action="/post/hashtag")
+        input(type="text" name="hashtag" placeholder="search tag")
+        button.btn SEARCH
+      for twit in twits
+        .twit
+          input.twit-user-id(type="hidden" value=twit.user.id)
+          input.twit-id(type="hidden" value=twit.id)
+          .twit-author= twit.user.nick
+          -const follow = user && user.Followings.map(f => f.id).includes(twit.user.id)
+          if user && user.id !== twit.user.id && !follow
+            button.twit-follow to Follow
+          .twit-content= twit.content
+          if twit.img
+            .twit-img
+              img(src=twit.img, alt="thumbnail")
   script.
     if (document.getElementById("img")) {
       document.getElementById("img").addEventListener('change', e => {
