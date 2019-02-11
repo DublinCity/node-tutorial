@@ -1,6 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var session = require('express-session');
+var flash = require('connect-flash');
 var FileStore = require('session-file-store')(session);
 var passport = require('passport')
 	, LocalStrategy = require('passport-local').Strategy;
@@ -14,6 +15,7 @@ app.use(session({
 	saveUninitialized: true,
 	store: new FileStore(),
 }));
+app.use(flash());
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -60,10 +62,12 @@ function(username, password, done) {
 
 app.get('/', (req, res) => {
 	const { user } = req;
-	return res.send(user? `welcome! ${user.name} <div><a href="/logout">logout</a></div>`:'<a href="/login">login</a>');
+	const msg = req.flash('logoutMessage');
+	console.log(msg);
+	return res.send(user? `welcome! ${user.name} <div><a href="/logout">logout</a></div>`: '<a href="/login">login</a>');
 });
 
-app.get('/login', function (req, res, next) {
+app.get('/login', function (req, res) {
 	return res.send(`<form method="post" action="/login/auth">
   <label>email</label>
   <input type="text" name="email"/>
@@ -75,6 +79,7 @@ app.get('/login', function (req, res, next) {
 
 app.get('/logout', function(req, res){
 	req.logout();
+	req.flash('logoutMessage', 'log outed !');
 	res.redirect('/');
 });
 
@@ -82,7 +87,18 @@ app.post('/login/auth',
 	passport.authenticate('local', { 
 		successRedirect: '/',
 		failureRedirect: '/login',
+		failureFlash: true,
 	})
 );
+
+
+app.get('/flash', function (req, res) {
+	req.flash('info', 'Welcome');
+	res.send('flash');
+});
+app.get('/flash-display', function (req, res) {
+	const msg = req.flash('info');
+	res.send(msg);
+});
 
 app.listen(3001, ()=> console.log('listen'));
